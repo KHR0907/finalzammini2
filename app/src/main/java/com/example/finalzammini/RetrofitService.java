@@ -27,8 +27,7 @@ public interface RetrofitService {
      */
     @FormUrlEncoded
     @POST("chat/completions")
-    @Headers("Content-Type: application/json")
-    @Headers("Authorization: Bearer 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")
+    @Headers({"Content-Type:application/json","Authorization : Bearer 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"})
     Call<ModelUserSingle> doPostUserCreate(
              @Body ModelUserVo modelUserVo
     );
