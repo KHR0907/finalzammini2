@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class ChatView extends AppCompatActivity {
 
+    private RetrofitService retrofitService = RetrofitFactory.create();
+
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EditText editText;
@@ -63,6 +65,9 @@ public class ChatView extends AppCompatActivity {
                 editText.setText(null);
                 Toast.makeText(getApplicationContext(), "전송"+message, Toast.LENGTH_SHORT).show();
             }
+
+            retrofitService.doPostUserCreate();
+
 
         }
     }

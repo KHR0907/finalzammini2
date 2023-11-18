@@ -2,14 +2,14 @@ package com.example.finalzammini;
 
 public class ModelUserSingle {
 
-    private ModelUser data;
+    private ModelUserVo data;
 
-    public ModelUser getData() { return data; }
+    public ModelUserVo getData() { return data; }
 
-    public void setData(ModelUser data) { this.data = data; }
+    public void setData(ModelUserVo data) { this.data = data; }
 
     @Override
     public String toString() {
-        return "ModelUserSingle {\ndata=" + data.toString() + "\n}";
+        return "ModelUserSingle {\n" + data.toString() + "\n}";
     }
 }
