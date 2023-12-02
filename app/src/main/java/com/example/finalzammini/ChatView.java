@@ -24,12 +24,11 @@ import java.util.concurrent.TimeUnit;
 
 public class ChatView extends AppCompatActivity {
 
-//    private RetrofitService retrofitService = RetrofitFactory.create();
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EditText editText;
-//    ArrayList<ChatDto> arrayList = new ArrayList<>();
+
     ChatDto chatDto = new ChatDto();
     ChatAdapter chatAdapter = new ChatAdapter();
     String message;
@@ -71,7 +70,6 @@ public class ChatView extends AppCompatActivity {
                 chatDto.setText_gchat_message_me(message);
                 chatAdapter.addItem(chatDto);
                 recyclerView.setAdapter(chatAdapter);
-//                chatAdapter.notifyItemInserted(arrayList.size()-1);
                 editText.setText(null);
                 MessageEntity[] messageEntity = new MessageEntity[1];
                 messageEntity[0] = new MessageEntity();
@@ -107,9 +105,10 @@ public class ChatView extends AppCompatActivity {
                             JsonResponseDto resout = response.body();
                             ChoicesEntity[] choicesEntity = resout.getChoices();
                             MessageEntity messageEntity = choicesEntity[0].getMessage();
-                            System.out.println(messageEntity.getContent());
+                            String message = messageEntity.getContent();
+                            System.out.println(message);
                             chatDto = new ChatDto();
-                            //chatDto.setText_gchat_message_you(response.body().getChoices().getMessage());
+                            chatDto.setText_gchat_message_you(message);
                             chatAdapter.addItem(chatDto);
                             recyclerView.setAdapter(chatAdapter);
                         }
