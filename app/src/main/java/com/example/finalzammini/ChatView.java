@@ -28,14 +28,42 @@ public class ChatView extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EditText editText;
+    private MessageEntity[] messages;
 
     ChatDto chatDto = new ChatDto();
     ChatAdapter chatAdapter = new ChatAdapter();
     String message;
 
+
+//    test
     String message2;
 
 
+    private static MessageEntity[] Add(MessageEntity[] originArray, MessageEntity Val) {
+
+        MessageEntity[] newArray = null;
+        // 순서 1. (원본 배열의 크기 + 1)를 크기를 가지는 배열을 생성
+        if (originArray == null) {
+            newArray = new MessageEntity[0];
+        }else {
+            newArray = new MessageEntity[originArray.length + 1];
+        }
+
+
+        // 순서 2. 새로운 배열에 값을 순차적으로 할당
+        if (originArray != null) {
+            for(int index = 0; index < originArray.length; index++) {
+                newArray[index] = originArray[index];
+            }
+        }
+
+        if (originArray != null) {
+            // 순서 3. 새로운 배열의 마지막 위치에 추가하려는 값을 할당
+            newArray[originArray.length] = Val;
+        }
+        // 순서 4. 새로운 배열을 반환
+        return newArray;
+    }
 
 
     @Override
@@ -158,12 +186,12 @@ public class ChatView extends AppCompatActivity {
             jsonRequestDto.setModel("gpt-3.5-turbo");
             jsonRequestDto.setMessage(messageEntity);
 
-            //RetrofitService retrofitService = RetrofitFactory.create();
+
             String BASE_URL = "https://api.openai.com/v1/";
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                    .connectTimeout(1, TimeUnit.MINUTES)
-                    .readTimeout(30, TimeUnit.SECONDS)
-                    .writeTimeout(15, TimeUnit.SECONDS)
+                    .connectTimeout(10, TimeUnit.MINUTES)
+                    .readTimeout(300, TimeUnit.SECONDS)
+                    .writeTimeout(150, TimeUnit.SECONDS)
                     .build();
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -184,16 +212,21 @@ public class ChatView extends AppCompatActivity {
                         ChoicesEntity[] choicesEntity = resout.getChoices();
                         MessageEntity messageEntity = choicesEntity[0].getMessage();
                         String message = messageEntity.getContent();
+                        messages=Add(messages, messageEntity);
+                        System.out.println(messages.length);
+                        for(int i=0; i<messages.length; i++){
+                            System.out.println(messages[i].getContent());
+                        }
                         System.out.println(message);
-
                         chatDto = new ChatDto();
-                        chatDto.setText_gchat_message_you(message);
+                        chatDto.setText_gchat_message_you(messageEntity.getContent());
                         chatAdapter.addItem(chatDto);
                         recyclerView.setAdapter(chatAdapter);
                     }
                     else{
                         System.out.println(response.errorBody());
                     }
+                    recyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
                 }
 
                 @Override
@@ -255,7 +288,14 @@ public class ChatView extends AppCompatActivity {
                             ChoicesEntity[] choicesEntity = resout.getChoices();
                             MessageEntity messageEntity = choicesEntity[0].getMessage();
                             String message = messageEntity.getContent();
+
+                            messages=Add(messages, messageEntity);
+                            System.out.println(messages.length);
+                            for(int i=0; i<messages.length; i++){
+                                System.out.println(messages[i].getContent());
+                            }
                             System.out.println(message);
+
                             chatDto = new ChatDto();
                             chatDto.setText_gchat_message_you(message);
                             chatAdapter.addItem(chatDto);
@@ -264,6 +304,7 @@ public class ChatView extends AppCompatActivity {
                         else{
                             System.out.println(response.errorBody());
                         }
+                        recyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
                     }
 
                     @Override

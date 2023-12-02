@@ -21,8 +21,18 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         // 여기서 각 항목에 대한 뷰 타입을 반환합니다.
-        return position % 2 == 0 ? VIEW_TYPE_ONE : VIEW_TYPE_TWO;
+        return position % 2 == 0 ? VIEW_TYPE_TWO : VIEW_TYPE_ONE;
     }
+
+    public void addItem(ChatDto chatDto) {
+        arrayList.add(chatDto);
+    }
+    @Override
+    public int getItemCount() {
+        return arrayList == null ? 0 : arrayList.size();
+    }
+
+
 
     @NonNull
     @Override
@@ -39,6 +49,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             default:
                 // 예외 처리 등을 수행할 수 있습니다.
+                System.out.printf("viewType 오류");
                 return null;
         }
     }
@@ -61,15 +72,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
         }
     }
-
-    public void addItem(ChatDto chatDto) {
-        arrayList.add(chatDto);
-    }
-    @Override
-    public int getItemCount() {
-        return arrayList == null ? 0 : arrayList.size();
-    }
-
 
 
     // ViewHolder 클래스들을 정의합니다.
