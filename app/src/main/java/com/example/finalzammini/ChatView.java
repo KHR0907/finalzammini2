@@ -105,7 +105,9 @@ public class ChatView extends AppCompatActivity {
 
                         if(response.isSuccessful()){
                             JsonResponseDto resout = response.body();
-                            System.out.println(resout.getChoices().toString());
+                            ChoicesEntity[] choicesEntity = resout.getChoices();
+                            MessageEntity messageEntity = choicesEntity[0].getMessage();
+                            System.out.println(messageEntity.getContent());
                             chatDto = new ChatDto();
                             //chatDto.setText_gchat_message_you(response.body().getChoices().getMessage());
                             chatAdapter.addItem(chatDto);

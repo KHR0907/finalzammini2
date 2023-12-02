@@ -16,7 +16,7 @@
 #  }'
 
 POST https://api.openai.com/v1/chat/completions
-Authorization: Bearer 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
+Authorization: Bearer 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
 Content-Type: application/json
 
 {

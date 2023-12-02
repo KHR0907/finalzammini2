@@ -11,7 +11,7 @@ public interface RetrofitService {
      * @brief "API - POST request"
      */
     @POST("chat/completions")
-    @Headers({"Content-Type:application/json","Authorization:Bearer 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"})
+    @Headers({"Content-Type:application/json","Authorization:Bearer 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"})
     Call<JsonResponseDto> sendChat(
              @Body JsonRequestDto jsonRequestDto
     );
