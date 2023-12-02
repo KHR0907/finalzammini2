@@ -44,9 +44,16 @@ public class ChatView extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
+        String gameMode = intent.getStringExtra("gameMode");
 
 
-        Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10;
+        if(gameMode.equals("butterfly")){
+
+        }else if(gameMode.equals("titanic")){
+
+        }
+
+        Button btn1;
         ChatView.BtnOnClick btnOnClick= new ChatView.BtnOnClick();
 
         btn1 =findViewById(R.id.button_gchat_send);

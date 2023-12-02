@@ -18,11 +18,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Zammini");
 
-        Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10;
+        Button btn1, btn2;
         BtnOnClick btnOnClick= new BtnOnClick();
 
-        btn1 =findViewById(R.id.button1);
+        btn1 =findViewById(R.id.Button1);
         btn1.setOnClickListener(btnOnClick);
+        btn2 =findViewById(R.id.Button2);
+        btn2.setOnClickListener(btnOnClick);
     }
 
     class BtnOnClick implements View.OnClickListener {
@@ -31,7 +33,15 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intent = new Intent(getApplicationContext(), ChatView.class);
             //intent.putExtra("매개변수명",데이터);
-            intent.putExtra("bundle",bundle);
+            int id = v.getId();
+            if(id==R.id.Button1){
+                intent.putExtra("bundle",bundle);   
+                intent.putExtra("gameMode", "butterfly");
+            }else if(id==R.id.Button2){
+                intent.putExtra("bundle",bundle);
+                intent.putExtra("gameMode", "titanic");
+            }
+
             //액티비티 변환
             startActivity(intent);
         }
