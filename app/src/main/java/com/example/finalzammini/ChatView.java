@@ -171,20 +171,23 @@ public class ChatView extends AppCompatActivity {
                     "이제 나에게 내 이름을 묻는 것으로 게임을 시작하세요. 내가 응답할 때까지 기다리세요.\n" +
                     "\n" +
                     "내가 응답하면 긴급하게 나를 타이타닉의 하급 갑판 승무원으로 환영하고 구명보트를 싣는 일에 동원하세요.";
+
             message2 = "hello world";
         }
 
 
-        if(message2 != null){
+        if(message != null){
 
             MessageEntity[] messageEntity = new MessageEntity[1];
             messageEntity[0] = new MessageEntity();
-            messageEntity[0].setContent(message2);
-            messageEntity[0].setRole("user");
+            messageEntity[0].setContent(message);
+            messageEntity[0].setRole("system");
+            messages=Add(messages, messageEntity[0]);
 
             JsonRequestDto jsonRequestDto = new JsonRequestDto();
             jsonRequestDto.setModel("gpt-3.5-turbo");
             jsonRequestDto.setMessage(messageEntity);
+
 
 
             String BASE_URL = "https://api.openai.com/v1/";
@@ -213,11 +216,7 @@ public class ChatView extends AppCompatActivity {
                         MessageEntity messageEntity = choicesEntity[0].getMessage();
                         String message = messageEntity.getContent();
                         messages=Add(messages, messageEntity);
-                        System.out.println(messages.length);
-                        for(int i=0; i<messages.length; i++){
-                            System.out.println(messages[i].getContent());
-                        }
-                        System.out.println(message);
+
                         chatDto = new ChatDto();
                         chatDto.setText_gchat_message_you(messageEntity.getContent());
                         chatAdapter.addItem(chatDto);
@@ -257,10 +256,11 @@ public class ChatView extends AppCompatActivity {
                 messageEntity[0] = new MessageEntity();
                 messageEntity[0].setContent(message);
                 messageEntity[0].setRole("user");
+                messages=Add(messages, messageEntity[0]);
 
                 JsonRequestDto jsonRequestDto = new JsonRequestDto();
                 jsonRequestDto.setModel("gpt-3.5-turbo");
-                jsonRequestDto.setMessage(messageEntity);
+                jsonRequestDto.setMessage(messages);
 
                 //RetrofitService retrofitService = RetrofitFactory.create();
                 String BASE_URL = "https://api.openai.com/v1/";
@@ -288,13 +288,7 @@ public class ChatView extends AppCompatActivity {
                             ChoicesEntity[] choicesEntity = resout.getChoices();
                             MessageEntity messageEntity = choicesEntity[0].getMessage();
                             String message = messageEntity.getContent();
-
                             messages=Add(messages, messageEntity);
-                            System.out.println(messages.length);
-                            for(int i=0; i<messages.length; i++){
-                                System.out.println(messages[i].getContent());
-                            }
-                            System.out.println(message);
 
                             chatDto = new ChatDto();
                             chatDto.setText_gchat_message_you(message);
