@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getApplicationContext(), ChatView.class);
-            //intent.putExtra("매개변수명",데이터);
             int id = v.getId();
             if(id==R.id.Button1){
                 intent.putExtra("bundle",bundle);   

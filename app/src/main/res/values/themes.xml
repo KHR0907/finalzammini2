@@ -3,6 +3,13 @@
     <style name="Base.Theme.Finalzammini" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!-- Customize your theme here. -->
+
+        <!--추가-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+
     </style>
 
     <style name="Theme.Finalzammini" parent="Base.Theme.Finalzammini"/>
