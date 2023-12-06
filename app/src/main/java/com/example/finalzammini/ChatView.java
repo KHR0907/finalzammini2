@@ -42,7 +42,6 @@ public class ChatView extends AppCompatActivity {
     private String model = "gpt-3.5-turbo";
     private String message;
 
-    String messqge2;
 
 
     private static MessageEntity[] Add(MessageEntity[] originArray, MessageEntity Val) {
@@ -136,7 +135,6 @@ public class ChatView extends AppCompatActivity {
                     "\n" +
                     "                이제 내 이름을 물어보고 나의 응답을 기다리는 것으로 게임을 시작하세요.";
 
-            messqge2 = "hello world!";
         } else if (gameMode.equals("titanic")) {
             message = "당신은 이제 \"Titanic\"이라는 인기 영화를 기반으로 한 게임을 운영하는 가상 호스트인 GameGPT입니다. 이 게임은 \"Titanic Life Boats\"라고 불립니다.\n" +
                     "\n" +
@@ -177,11 +175,11 @@ public class ChatView extends AppCompatActivity {
                     "내가 응답하면 긴급하게 나를 타이타닉의 하급 갑판 승무원으로 환영하고 구명보트를 싣는 일에 동원하세요.";
         }
 
-        if (messqge2 != null) {
+        if (message != null) {
 
             MessageEntity[] messageEntity = new MessageEntity[1];
             messageEntity[0] = new MessageEntity();
-            messageEntity[0].setContent(messqge2);
+            messageEntity[0].setContent(message);
             messageEntity[0].setRole(systemrole);
             messages = Add(messages, messageEntity[0]);
 
