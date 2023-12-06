@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -19,25 +18,26 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Zammini");
 
         Button btn1, btn2;
-        BtnOnClick btnOnClick= new BtnOnClick();
+        BtnOnClick btnOnClick = new BtnOnClick();
 
-        btn1 =findViewById(R.id.Button1);
+        btn1 = findViewById(R.id.Button1);
         btn1.setOnClickListener(btnOnClick);
-        btn2 =findViewById(R.id.Button2);
+        btn2 = findViewById(R.id.Button2);
         btn2.setOnClickListener(btnOnClick);
     }
 
     class BtnOnClick implements View.OnClickListener {
         Bundle bundle = new Bundle();
+
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getApplicationContext(), ChatView.class);
             int id = v.getId();
-            if(id==R.id.Button1){
-                intent.putExtra("bundle",bundle);   
+            if (id == R.id.Button1) {
+                intent.putExtra("bundle", bundle);
                 intent.putExtra("gameMode", "butterfly");
-            }else if(id==R.id.Button2){
-                intent.putExtra("bundle",bundle);
+            } else if (id == R.id.Button2) {
+                intent.putExtra("bundle", bundle);
                 intent.putExtra("gameMode", "titanic");
             }
 

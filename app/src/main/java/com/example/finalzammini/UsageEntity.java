@@ -14,6 +14,7 @@ public class UsageEntity {
     @Expose
     @SerializedName("total_tokens")
     private int totalTokens;
+
     public int getTotalTokens() {
         return totalTokens;
     }

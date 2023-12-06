@@ -21,7 +21,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         // 여기서 각 항목에 대한 뷰 타입을 반환합니다.
-        if(position<4){
+        if (position < 4) {
             return VIEW_TYPE_TWO;
         }
         return position % 2 == 0 ? VIEW_TYPE_TWO : VIEW_TYPE_ONE;
@@ -30,11 +30,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void addItem(ChatDto chatDto) {
         arrayList.add(chatDto);
     }
+
     @Override
     public int getItemCount() {
         return arrayList == null ? 0 : arrayList.size();
     }
-
 
 
     @NonNull
@@ -58,19 +58,18 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecyclerView.ViewHolder holder, int position) {
 
         // 각 뷰 홀더에 데이터를 바인딩합니다.
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_ONE:
-                ViewHolderOne viewHolderOne =(ViewHolderOne)holder ;
+                ViewHolderOne viewHolderOne = (ViewHolderOne) holder;
                 viewHolderOne.text_gchat_message_me.setText(arrayList.get(position).getText_gchat_message_me());
                 break;
 
             case VIEW_TYPE_TWO:
-                ViewHolderTwo viewHolderTwo =(ViewHolderTwo) holder ;
+                ViewHolderTwo viewHolderTwo = (ViewHolderTwo) holder;
                 viewHolderTwo.text_gchat_message_you.setText(arrayList.get(position).getText_gchat_message_you());
                 break;
         }

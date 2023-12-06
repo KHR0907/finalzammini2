@@ -6,7 +6,6 @@ public class ChatDto {
     private String text_gchat_message_you;
 
 
-
     public String getText_gchat_message_you() {
         return text_gchat_message_you;
     }

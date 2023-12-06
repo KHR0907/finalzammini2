@@ -14,14 +14,15 @@ public class SplashActivity extends AppCompatActivity {
         //로딩화면 시작.
         Loadingstart();
     }
-    private void Loadingstart(){
-        Handler handler=new Handler();
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+
+    private void Loadingstart() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
             }
-        },2000);
+        }, 2000);
     }
 }
