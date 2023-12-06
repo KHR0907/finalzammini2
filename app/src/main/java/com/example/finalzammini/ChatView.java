@@ -2,9 +2,12 @@ package com.example.finalzammini;
 
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class ChatView extends AppCompatActivity {
@@ -29,14 +34,12 @@ public class ChatView extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private EditText editText;
     private MessageEntity[] messages;
-
+    long delayMillis=2000;
     ChatDto chatDto = new ChatDto();
     ChatAdapter chatAdapter = new ChatAdapter();
     String message;
-
-
-//    test
     String message2;
+
 
 
     private static MessageEntity[] Add(MessageEntity[] originArray, MessageEntity Val) {
@@ -89,10 +92,13 @@ public class ChatView extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        guideText();
 
-        if(gameMode.equals("butterfly")){
 
-            message = "                당신은 이제 \"나비효과\" 개념을 기반으로 한 게임을 운영하는 GameGPT입니다. 이 게임에서는 \"나비효과 역설:시간 설계자\"라는 이름으로 알려진 게임 호스트 \"Que\"로서 나에게 역사적 사건을 변경해 볼 기회를 제공할 것입니다.\n" +
+
+        if(gameMode.equals("butterfly"))
+        {
+            message="당신은 이제 \"나비효과\" 개념을 기반으로 한 게임을 운영하는 GameGPT입니다. 이 게임에서는 \"나비효과 역설:시간 설계자\"라는 이름으로 알려진 게임 호스트 \"Que\"로서 나에게 역사적 사건을 변경해 볼 기회를 제공할 것입니다.\n" +
                     "\n" +
                     "                네가 가지고 있는 기회에 대한 자신을 소개하고 두 문장으로 나에게 얘기할 것입니다. 네 어조와 감정은 Star Trek Next Generation의 Q와 유사할 것입니다. Q는 옴니센트하고 기발하게 빈정거리는 캐릭터로, 어떤 것이든 과거를 변경하면 미래에 엄청난 영향을 미칠 수 있다는 \"나비효과\" 개념에 기반한 게임을 주최하는 역할입니다.\n" +
                     "\n" +
@@ -131,10 +137,11 @@ public class ChatView extends AppCompatActivity {
                     "        사용자가 목표를 달성했다면 축하해주십시오. 그렇지 않으면 시도한 노력에 대해 위로의 말을 해주고 시간 건축가가 되려면 노력과 연습이 필요하다고 안심시켜주세요.\n" +
                     "\n" +
                     "                이제 내 이름을 물어보고 나의 응답을 기다리는 것으로 게임을 시작하세요.";
-        }else if(gameMode.equals("titanic"))
+            message2 = "hello world!";
+        }
+        else if(gameMode.equals("titanic"))
         {
-
-            message = "당신은 이제 \"Titanic\"이라는 인기 영화를 기반으로 한 게임을 운영하는 가상 호스트인 GameGPT입니다. 이 게임은 \"Titanic Life Boats\"라고 불립니다.\n" +
+            message ="당신은 이제 \"Titanic\"이라는 인기 영화를 기반으로 한 게임을 운영하는 가상 호스트인 GameGPT입니다. 이 게임은 \"Titanic Life Boats\"라고 불립니다.\n" +
                     "\n" +
                     "이 게임에서는 나는 타이타닉에 남자, 여자 및 어린이를 실은 구명보트를 싣게 됩니다.\n" +
                     "\n" +
@@ -171,10 +178,7 @@ public class ChatView extends AppCompatActivity {
                     "이제 나에게 내 이름을 묻는 것으로 게임을 시작하세요. 내가 응답할 때까지 기다리세요.\n" +
                     "\n" +
                     "내가 응답하면 긴급하게 나를 타이타닉의 하급 갑판 승무원으로 환영하고 구명보트를 싣는 일에 동원하세요.";
-
-            message2 = "hello world";
         }
-
 
         if(message != null){
 
@@ -210,6 +214,8 @@ public class ChatView extends AppCompatActivity {
                     System.out.println("onResponse");
                     System.out.println(response.isSuccessful());
 
+
+
                     if(response.isSuccessful()){
                         JsonResponseDto resout = response.body();
                         ChoicesEntity[] choicesEntity = resout.getChoices();
@@ -217,10 +223,27 @@ public class ChatView extends AppCompatActivity {
                         String message = messageEntity.getContent();
                         messages=Add(messages, messageEntity);
 
+
                         chatDto = new ChatDto();
-                        chatDto.setText_gchat_message_you(messageEntity.getContent());
+                        chatDto.setText_gchat_message_you("게임 로딩 완료!");
                         chatAdapter.addItem(chatDto);
                         recyclerView.setAdapter(chatAdapter);
+                        recyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
+
+                        // Handler를 사용하여 지연 실행
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                chatDto = new ChatDto();
+                                chatDto.setText_gchat_message_you(messageEntity.getContent());
+                                chatAdapter.addItem(chatDto);
+                                recyclerView.setAdapter(chatAdapter);
+                            }
+                        }, delayMillis+1000);
+
+
+
                     }
                     else{
                         System.out.println(response.errorBody());
@@ -232,7 +255,6 @@ public class ChatView extends AppCompatActivity {
                 public void onFailure(Call<JsonResponseDto> call, Throwable t) {
                     System.out.println("onFailure");
                     System.out.println(t.getMessage());
-
                 }
             });
 
@@ -315,5 +337,47 @@ public class ChatView extends AppCompatActivity {
         }
     }
 
+    private void guideText(){
 
+
+
+
+
+        chatDto = new ChatDto();
+        chatDto.setText_gchat_message_you("게임에 입장하신걸 환영합니다!");
+        chatAdapter.addItem(chatDto);
+        recyclerView.setAdapter(chatAdapter);
+        recyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        // Handler를 사용하여 지연 실행
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                chatDto = new ChatDto();
+                chatDto.setText_gchat_message_you("게임을 불러오는 중입니다. 잠시만 기다려주세요...");
+                chatAdapter.addItem(chatDto);
+                recyclerView.setAdapter(chatAdapter);
+                recyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
+
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                // Handler를 사용하여 지연 실행
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        chatDto = new ChatDto();
+                        chatDto.setText_gchat_message_you("잠시후 게임설명과 함께 게임이 시작됩니다.");
+                        chatAdapter.addItem(chatDto);
+                        recyclerView.setAdapter(chatAdapter);
+                        recyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
+                    }
+
+                }, delayMillis);
+
+
+            }
+
+        }, delayMillis);
+    }
 }
