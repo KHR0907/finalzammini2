@@ -21,6 +21,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         // 여기서 각 항목에 대한 뷰 타입을 반환합니다.
+        if(position<4){
+            return VIEW_TYPE_TWO;
+        }
         return position % 2 == 0 ? VIEW_TYPE_TWO : VIEW_TYPE_ONE;
     }
 
