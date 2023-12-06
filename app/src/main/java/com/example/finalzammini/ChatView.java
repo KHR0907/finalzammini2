@@ -365,20 +365,6 @@ public class ChatView extends AppCompatActivity {
                 chatAdapter.addItem(chatDto);
                 recyclerView.setAdapter(chatAdapter);
                 recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
-
-
-                Handler handler = new Handler(Looper.getMainLooper());
-                // Handler를 사용하여 지연 실행
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        chatDto = new ChatDto();
-                        chatDto.setText_gchat_message_you("잠시후 게임설명과 함께 게임이 시작됩니다.");
-                        chatAdapter.addItem(chatDto);
-                        recyclerView.setAdapter(chatAdapter);
-                        recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
-                    }
-                }, delayMillis);
             }
         }, delayMillis);
     }
