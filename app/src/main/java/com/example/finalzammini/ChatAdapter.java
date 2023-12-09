@@ -11,24 +11,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<ChatDto> arrayList = new ArrayList<>();
     private static final int VIEW_TYPE_ONE = 1;
     private static final int VIEW_TYPE_TWO = 2;
 
+    List<Integer> chatHistory = new ArrayList<>();;
+
 
     @Override
     public int getItemViewType(int position) {
         // 여기서 각 항목에 대한 뷰 타입을 반환합니다.
-        if (position < 4) {
+        if(chatHistory.get(position)==0){
             return VIEW_TYPE_TWO;
+        }else if(chatHistory.get(position)==1){
+            return VIEW_TYPE_ONE;
         }
-        return position % 2 == 0 ? VIEW_TYPE_TWO : VIEW_TYPE_ONE;
+        return VIEW_TYPE_TWO;
     }
 
     public void addItem(ChatDto chatDto) {
         arrayList.add(chatDto);
+    }
+
+    public void setMode(int mode){
+        chatHistory.add(mode);
     }
 
     @Override

@@ -5,13 +5,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
+
     <ImageView
-            android:layout_width="340dp"
-            android:layout_height="363dp"
-            app:srcCompat="@drawable/logo"
-            android:id="@+id/imageView"
-            android:alpha="0.2"
-            android:rotation="-28" android:layout_centerInParent="true"/>
+        android:id="@+id/imageView"
+        android:layout_width="240dp"
+        android:layout_height="263dp"
+        android:layout_centerInParent="true"
+        android:alpha="0.1"
+        android:rotation="-28"
+        app:srcCompat="@drawable/logo" />
 
     <TextView
             android:layout_width="wrap_content"
