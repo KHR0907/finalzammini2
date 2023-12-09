@@ -239,13 +239,12 @@ public class ChatView extends AppCompatActivity {
 
                             String[] singleChat = message.split("\n\n");
                             for (String s : singleChat) {
-                            chatDto = new ChatDto();
-                            chatDto.setText_gchat_message_you(message);
-                            chatAdapter.setMode(0);
-                            chatAdapter.addItem(chatDto);
-                            recyclerView.setAdapter(chatAdapter);
-                            recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
-
+                                chatDto = new ChatDto();
+                                chatDto.setText_gchat_message_you(s);
+                                chatAdapter.setMode(0);
+                                chatAdapter.addItem(chatDto);
+                                recyclerView.setAdapter(chatAdapter);
+                                recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
                             }
 
                         } else {
